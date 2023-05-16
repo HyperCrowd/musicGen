@@ -1,4 +1,4 @@
-import { generateSong, initialSongState, Song } from './song';
+import { Song } from './song';
 
 export const trackerReducer = (
   state: Song,
@@ -8,7 +8,6 @@ export const trackerReducer = (
     case 'GENERATE_MOD_DATA':
       return {
         ...state,
-        modData: generateSong(state),
       };
     default:
       return state;

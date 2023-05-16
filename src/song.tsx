@@ -1,69 +1,28 @@
-import { generateTrack, Track } from './track';
+import { Track } from './track';
 
-export interface Song {
-  title: string;
-  tracks: Track[];
+export class Song {
+  title: string = '';
+  tracks: Track[] = [];
+
+  constructor (title = '', tracks: Track[] = []) {
+    this.title = title
+    this.tracks = tracks
+  }
 }
 
-// Step 2: Define the initial state
-export const initialSongState: Song = {
-  title: '',
-  tracks: [
-    {
-      name: 'Kick',
-      notes: generateTrack(0),
-    },
-    {
-      name: 'Closed Hats',
-      notes: generateTrack(1),
-    },
-    {
-      name: 'Open Hats',
-      notes: generateTrack(2),
-    },
-    {
-      name: 'Snare1',
-      notes: generateTrack(3),
-    },
-    {
-      name: 'Snare2',
-      notes: generateTrack(4),
-    },
-    {
-      name: 'Snare3',
-      notes: generateTrack(5),
-    },
-    {
-      name: 'Bass',
-      notes: generateTrack(6),
-    },
-    {
-      name: 'Lead1',
-      notes: generateTrack(7),
-    },
-    {
-      name: 'Lead2',
-      notes: generateTrack(8),
-    },
-    {
-      name: 'Pad1',
-      notes: generateTrack(9),
-    },
-    {
-      name: 'Pad2',
-      notes: generateTrack(10),
-    },
-    {
-      name: 'SFX1',
-      notes: generateTrack(11),
-    },
-    {
-      name: 'SFX2',
-      notes: generateTrack(12),
-    },
+export const initialSongState: Song = new Song('', [
+    new Track('Kick', 0),
+    new Track('Closed Hats', 1),
+    new Track('Open Hats', 2),
+    new Track('Snare1', 3),
+    new Track('Snare2', 4),
+    new Track('Snare3', 5),
+    new Track('Bass', 6),
+    new Track('Lead1', 7),
+    new Track('Lead2', 8),
+    new Track('Pad1', 9),
+    new Track('Pad2', 10),
+    new Track('SFX1', 11),
+    new Track('SFX2', 12),
   ],
-};
-
-export const generateSong = (song: Song) => {
-  return song;
 };
