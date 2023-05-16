@@ -1,5 +1,9 @@
 import { Note } from './note';
 
+interface Intervals {
+  [key: string]: number[];
+}
+
 const noteNames = [
   'C-',
   'C#',
@@ -14,10 +18,6 @@ const noteNames = [
   'A#',
   'B-',
 ];
-
-interface Intervals {
-  [key: string]: number[];
-}
 
 export const scales: Intervals = {
   major: [0, 2, 4, 5, 7, 9, 11],
@@ -114,9 +114,19 @@ export const progressions = {
   montgomeryWard: 'I-III7-IV-iv',
   pachelbelsCanon: 'vi-IV-I-V',
   pop: 'I-V-vi-iii-IV-I-IV-V',
-  popRock3: 'I-iii-IV-V',
   popRock1: 'I-IV-vi-V',
   popRock2: 'I-VII-IV',
+  popRock3: 'I-iii-IV-V',
+  popRock4: 'I-IV-Vsus4-I',
+  popRock5: 'I-IV-Vsus2-I',
+  popRock6: 'I-Vsus4-IV-I',
+  popRock7: 'I-IV-Vsus4-V',
+  popRock8: 'I-Vsus4-IV-V',
+  popRock9: 'I-IIIsus4-IV-I',
+  popRock10: 'I-IVsus2-V-Isus2',
+  popRock11: 'Isus4-I-Vsus4-I',
+  popRock12: 'I-Vsus2-IV-Vsus2',
+  popRock13: 'Isus2-Vsus2-IVsus2-V',
   ragtime: 'I-I7-IV-IV7-I-V7-I',
   rhythmAndBlues: 'I-IV-V-I',
   rhythmChanges: 'I-VI-II-V',
@@ -131,6 +141,7 @@ const romansOnly = /[^vi]*/gi;
 const romanFive = /v/i;
 const isNumber = /[0-9]/;
 const hasSus = /sus([0-9]+)/;
+
 /**
  *
  */
@@ -214,7 +225,6 @@ export function getProgressionChords(
     result.push(generateChord(note, chord));
   }
 
-  console.log(result.map((notes) => notes.map((note) => note.note)));
   return result;
 }
 
