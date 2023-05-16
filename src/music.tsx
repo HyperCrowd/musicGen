@@ -89,6 +89,83 @@ export const chords: Intervals = {
   neapolitan: [0, 1, 5, 8],
 };
 
+export const progressions = {
+  fifties1: 'I-VI-IV-V',
+  fifties2: 'I-vi-IV-V',
+  andalusianCadence: 'vi-V-IV-III',
+  axisOfAwesome: 'I-V-vi-IV',
+  backdoor: 'I-bVII-bVI-V',
+  blues: 'I-IV-I-V',
+  bluesRock: 'I-bIII-bVII-IV',
+  chromaticMediant: 'I-bIII-bVI',
+  circleOfFifths: 'I-IV-vii-iii-vi-ii-V-I',
+  coltraneChanges: 'I-bIII-bVI-II-V-I',
+  dooWop: 'I-III-IV-V',
+  flamenco: 'i-bVII-bVI-V',
+  folkCountry: 'I-IV-V-IV',
+  hardRockMetal: 'I-bVI-bVII-I',
+  jazz: 'ii-V-I',
+  jazzBlues: 'I-ii-V-I',
+  jazzPopRock: 'I-IV-ii-V',
+  ladyMadonna: 'I-bVII-IV-bVI-V',
+  major: 'I-IV-V',
+  minor: 'i-iv-v',
+  modalInterchange: 'I-bVI-bVII-IV',
+  montgomeryWard: 'I-III7-IV-iv',
+  pachelbelsCanon: 'vi-IV-I-V',
+  pop: 'I-V-vi-iii-IV-I-IV-V',
+  popRock3: 'I-iii-IV-V',
+  popRock1: 'I-IV-vi-V',
+  popRock2: 'I-VII-IV',
+  ragtime: 'I-I7-IV-IV7-I-V7-I',
+  rhythmAndBlues: 'I-IV-V-I',
+  rhythmChanges: 'I-VI-II-V',
+  rock: 'I-bVII-IV',
+  sensitiveFemale: 'vi-IV-I-V',
+  surfRock: 'I-II-IV-V',
+  turnaround: 'I-VI-ii-V',
+  walkdown: 'I-VI-IV-III',
+};
+
+const romansOnly = /[^vi]*/gi;
+const romanFive = /v/i;
+
+/**
+ *
+ */
+export function getProgressionChords(notation: string, scale: string) {
+  const proggression = notation.split('-').map((notation) => {
+    const result = {
+      flatten: notation[0] === 'b',
+      dominant: notation[notation.length - 1] === '7',
+      mode: '',
+      scaleIndex: 0,
+    };
+
+    const symbols = notation.replace(romansOnly, '').split(romanFive);
+
+    for (const symbol of symbols) {
+      if (symbol === '' && result.scaleIndex < 5) {
+        result.scaleIndex += 5;
+        continue;
+      } else {
+        result.scaleIndex += symbol.length;
+      }
+
+      if (symbol[0] === 'i') {
+        result.mode = 'minor';
+      } else {
+        result.mode = 'major';
+      }
+    }
+
+    result.scaleIndex -= 1;
+    return result;
+  });
+
+  console.log(proggression);
+}
+
 export const chordNames = Object.keys(chords);
 
 export function generateProgression(
