@@ -141,24 +141,27 @@ export function getProgressionChords(
   instrument: number
 ) {
   const result: Note[][] = [];
-  const rootOffset = noteNames.indexOf(rootNote);
+  const rootNoteOffset = noteNames.indexOf(rootNote);
+  const notes = scale.map(
+    (offset) => noteNames[(offset + rootNoteOffset) % noteNames.length]
+  );
 
   const progression = notation.split('-').map((notation) => {
     const result = {
       flatten: notation[0] === 'b',
       dominant: notation[notation.length - 1] === '7',
       mode: '',
-      scaleIndex: 0,
+      notesIndex: 0,
     };
 
     const symbols = notation.replace(romansOnly, '').split(romanFive);
 
     for (const symbol of symbols) {
-      if (symbol === '' && result.scaleIndex < 5) {
-        result.scaleIndex += 5;
+      if (symbol === '' && result.notesIndex < 5) {
+        result.notesIndex += 5;
         continue;
       } else {
-        result.scaleIndex += symbol.length;
+        result.notesIndex += symbol.length;
       }
 
       if (symbol[0] === 'i') {
@@ -168,23 +171,23 @@ export function getProgressionChords(
       }
     }
 
-    result.scaleIndex -= 1;
+    result.notesIndex -= 1;
     return result;
   });
-
+  console.log(notes);
   for (const details of progression) {
-    const noteIndex =
-      scale[(details.scaleIndex + rootOffset - (details.flatten ? 1 : 0)) % 12];
-    console.log([
-      details.scaleIndex,
-      rootOffset,
-      details.flatten ? 1 : 0,
-      (details.scaleIndex + rootOffset - (details.flatten ? 1 : 0),
-      'a',
-      noteIndex,
-    ]);
-    const noteName = noteNames[noteIndex];
-    const note = new Note(instrument, noteName, octave);
+    console.log(details);
+    const flattenOffset = details.flatten ? 1 : 0;
+    const noteName =
+      flattenOffset === 0
+        ? notes[details.notesIndex]
+        : noteNames[noteNames.indexOf(notes[details.notesIndex]) - 1];
+
+    const octaveChange = Math.floor(
+      (details.notesIndex - flattenOffset) / notes.length
+    );
+
+    const note = new Note(instrument, noteName, octave + octaveChange);
     const chord = chords[details.mode];
     result.push(generateChord(note, chord));
   }
