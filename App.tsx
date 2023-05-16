@@ -1,6 +1,11 @@
 import React from 'react';
 import { useTracker } from './src/context';
+import { chords, generateChord, scales } from './src/music';
+import { Note } from './src/note';
 import './style.css';
+console.log(scales.major);
+console.log(chords.major);
+console.log(generateChord(new Note(0, 'C-', 3), scales.major, chords.major));
 
 export default function App() {
   const { title } = useTracker();

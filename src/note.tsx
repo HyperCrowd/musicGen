@@ -1,6 +1,6 @@
 export class Note {
   index: number = 0;
-  note: string = 'C';
+  note: string = 'C-';
   octave: number = 3;
   instrument: number = 0;
   volume: number = 64;
@@ -30,7 +30,7 @@ export class Note {
       if (this.note === '' || this.octave === -1 || this.instrument === -1) {
         result += '.....';
       } else {
-        result += `${this.note}-${this.octave}${this.instrument
+        result += `${this.note}${this.octave}${this.instrument
           .toString()
           .padStart(2, '0')}`;
       }
