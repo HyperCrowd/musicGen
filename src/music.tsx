@@ -129,7 +129,8 @@ export const progressions = {
 
 const romansOnly = /[^vi]*/gi;
 const romanFive = /v/i;
-
+const isNumber = /[0-9]/;
+const hasSus = /sus([0-9]+)/;
 /**
  *
  */
@@ -147,9 +148,23 @@ export function getProgressionChords(
   );
 
   const progression = notation.split('-').map((notation) => {
+    const isSuspended = notation.match(isNumber);
+    let suspended;
+
+    if (isSuspended === null) {
+      suspended = false;
+    } else {
+      suspended = isSuspended[1];
+      notation = notation.replace(hasSus, '');
+    }
+
     const result = {
       flatten: notation[0] === 'b',
-      dominant: notation[notation.length - 1] === '7',
+      suspend: suspended,
+      dominant:
+        notation[notation.length - 1].match(isNumber) === null
+          ? false
+          : notation[notation.length - 1],
       mode: '',
       notesIndex: 0,
     };
@@ -174,9 +189,8 @@ export function getProgressionChords(
     result.notesIndex -= 1;
     return result;
   });
-  console.log(notes);
+
   for (const details of progression) {
-    console.log(details);
     const flattenOffset = details.flatten ? 1 : 0;
     const noteName =
       flattenOffset === 0
@@ -188,7 +202,15 @@ export function getProgressionChords(
     );
 
     const note = new Note(instrument, noteName, octave + octaveChange);
-    const chord = chords[details.mode];
+    const chordName =
+      details.dominant !== false
+        ? `dominant${details.dominant}`
+        : details.suspend !== false
+        ? `sus${details.suspend}`
+        : details.mode;
+
+    const chord = chords[chordName];
+
     result.push(generateChord(note, chord));
   }
 
