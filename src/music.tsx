@@ -133,8 +133,17 @@ const romanFive = /v/i;
 /**
  *
  */
-export function getProgressionChords(notation: string, scale: string) {
-  const proggression = notation.split('-').map((notation) => {
+export function getProgressionChords(
+  notation: string,
+  rootNote: string,
+  scale: number[],
+  octave: number,
+  instrument: number
+) {
+  const result: Note[][] = [];
+  const rootOffset = noteNames.indexOf(rootNote);
+
+  const progression = notation.split('-').map((notation) => {
     const result = {
       flatten: notation[0] === 'b',
       dominant: notation[notation.length - 1] === '7',
@@ -163,35 +172,25 @@ export function getProgressionChords(notation: string, scale: string) {
     return result;
   });
 
-  console.log(proggression);
-}
-
-export const chordNames = Object.keys(chords);
-
-export function generateProgression(
-  rootNode: Note,
-  scale: number[],
-  chord: number[]
-) {}
-
-/**
- *
- */
-export function getChordName(
-  rootNote: number,
-  scale: number[],
-  chordType: string
-): string {
-  const chordIntervals = chords[chordType];
-  if (!chordIntervals) {
-    throw new Error(`Invalid chord type: ${chordType}`);
+  for (const details of progression) {
+    const noteIndex =
+      scale[(details.scaleIndex + rootOffset - (details.flatten ? 1 : 0)) % 12];
+    console.log([
+      details.scaleIndex,
+      rootOffset,
+      details.flatten ? 1 : 0,
+      (details.scaleIndex + rootOffset - (details.flatten ? 1 : 0),
+      'a',
+      noteIndex,
+    ]);
+    const noteName = noteNames[noteIndex];
+    const note = new Note(instrument, noteName, octave);
+    const chord = chords[details.mode];
+    result.push(generateChord(note, chord));
   }
 
-  const chordNotes = chordIntervals.map(
-    (interval) => (rootNote + interval) % 12
-  );
-  const chordName = chordNotes.map((note) => noteNames[note]).join('');
-  return chordName;
+  console.log(result.map((notes) => notes.map((note) => note.note)));
+  return result;
 }
 
 /**

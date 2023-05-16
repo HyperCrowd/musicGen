@@ -12,7 +12,9 @@ import './style.css';
 // console.log(scales.major);
 // console.log(chords.major);
 // console.log(generateChord(new Note(0, 'G-', 3), chords.major));
-console.log(getProgressionChords('i-bVII-bVI-V7', []));
+console.log(
+  getProgressionChords('i-bVII-bVI-V7', 'A-', scales.melodicMinor, 3, 1)
+);
 
 export default function App() {
   const { title } = useTracker();
