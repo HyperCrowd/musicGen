@@ -13,7 +13,7 @@ export const TrackerProvider = ({ children }: Props) => {
   // Define any other actions you need
 
   const startSong = () => {
-    dispatch({ type: 'GENERATE_MOD_DATA', title: 'Bob' });
+    dispatch({ type: 'GENERATE_MOD_DATA', title: 'Bob', tracks: [] });
   };
 
   return (

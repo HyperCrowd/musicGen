@@ -8,6 +8,9 @@ export class Note {
   effectValue: number = -1;
   active: boolean = true;
 
+  /**
+   *
+   */
   constructor(instrument = -1, note = '', octave = -1, volume = 64) {
     this.instrument = instrument;
     this.note = note;
