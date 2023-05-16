@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
-import { generateSong, Song } from './song';
+import { generateSong, initialSongState, Song } from './song';
 
 export const trackerReducer = (
   state: Song,
@@ -9,7 +8,7 @@ export const trackerReducer = (
     case 'GENERATE_MOD_DATA':
       return {
         ...state,
-        modData: generateSong(),
+        modData: generateSong(state),
       };
     default:
       return state;

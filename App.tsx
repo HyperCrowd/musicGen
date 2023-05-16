@@ -1,11 +1,14 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React from 'react';
+import { useTracker } from './src/context';
 import './style.css';
 
 export default function App() {
+  const { title } = useTracker();
+
   return (
     <div>
-      <h1>Hello StackBlitz!</h1>
-      <p>Start editing to see some magic happen :)</p>
+      <button>Generate MOD Data</button>
+      <div>{title}</div>
     </div>
   );
 }
