@@ -6,4 +6,5 @@ export interface Note {
   volume: number;
   effect: string;
   effectValue: string;
+  active: boolean;
 }
