@@ -153,6 +153,7 @@ export function getProgressionChords(
 ) {
   const result: Note[][] = [];
   const rootNoteOffset = noteNames.indexOf(rootNote);
+
   const notes = scale.map(
     (offset) => noteNames[(offset + rootNoteOffset) % noteNames.length]
   );
@@ -164,7 +165,6 @@ export function getProgressionChords(
     if (isSuspended === null) {
       suspended = false;
     } else {
-      console.log(isSuspended);
       suspended = isSuspended[1];
       notation = notation.replace(hasSus, '');
     }
@@ -205,7 +205,7 @@ export function getProgressionChords(
     result.notesIndex = hasV ? 5 + rightCount - leftCount - 1 : leftCount - 1;
 
     result.mode = isLower ? 'minor' : 'major';
-    //console.log(symbols, result);
+    console.log(result);
     return result;
   });
 
@@ -232,7 +232,7 @@ export function getProgressionChords(
 
     result.push(generateChord(note, chord));
   }
-  console.log(result);
+
   return result;
 }
 
@@ -249,7 +249,9 @@ export function generateChord(rootNote: Note, chords: number[]): Note[] {
       (rootNoteIndex + chordOffset) / noteNames.length
     );
     const newNoteValue = noteNames[noteIndex];
+
     console.log({ newNoteValue, noteIndex, rootNoteIndex, chordOffset });
+
     const newNote: Note = new Note(
       rootNote.instrument,
       newNoteValue,

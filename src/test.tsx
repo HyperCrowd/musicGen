@@ -1,5 +1,5 @@
 import { scales, getProgressionChords, progressions } from './music';
-
+import './music/progressions';
 /**
  *
  */
@@ -67,12 +67,13 @@ export default function validate() {
     ['F#', 'A#', 'C#'],
   ]);
 */
-  test(progressions.coltraneChanges, 'G-', scales.minor, 3, 1, [
-    ['G-', 'A-', 'D-'],
-    ['B-', 'D-', 'F-'],
-    ['E-', 'G#', 'B-'],
-    ['C-', 'E-', 'G-'],
-    ['D-', 'F#-', 'A-'],
-    ['G-', 'A-', 'D-'],
+
+  test('I-bIII-bVI-II-V-I', 'G-', scales.naturalMinor, 3, 1, [
+    ['G-', 'A#', 'D-'], // I
+    ['B-', 'D-', 'F-'], // bIII
+    ['E-', 'G#', 'B-'], // bVI
+    ['C-', 'E-', 'G-'], // II
+    ['D-', 'F#-', 'A-'], // V
+    ['G-', 'A-', 'D-'], // I
   ]);
 }
