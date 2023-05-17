@@ -138,7 +138,6 @@ export const progressions = {
 };
 
 const romansOnly = /[^vi]*/gi;
-const romanFive = /v/i;
 const isNumber = /[0-9]/;
 const hasSus = /sus([0-9]+)/;
 
@@ -159,12 +158,13 @@ export function getProgressionChords(
   );
 
   const progression = notation.split('-').map((notation) => {
-    const isSuspended = notation.match(isNumber);
+    const isSuspended = notation.match(hasSus);
     let suspended;
 
     if (isSuspended === null) {
       suspended = false;
     } else {
+      console.log(isSuspended);
       suspended = isSuspended[1];
       notation = notation.replace(hasSus, '');
     }
@@ -180,24 +180,32 @@ export function getProgressionChords(
       notesIndex: 0,
     };
 
-    const symbols = notation.replace(romansOnly, '').split(romanFive);
+    const symbols = notation.replace(romansOnly, '');
+    let hasV = false;
+    let leftCount = 0;
+    let rightCount = 0;
+    let isLower = false;
 
-    for (const symbol of symbols) {
-      if (symbol === '' && result.notesIndex < 5) {
-        result.notesIndex += 5;
-        continue;
-      } else {
-        result.notesIndex += symbol.length;
-      }
+    for (let i = 0; i < symbols.length; i++) {
+      const symbol = symbols[i];
 
-      if (symbol[0] === 'i') {
-        result.mode = 'minor';
+      if (symbol === 'i' || symbol === 'I') {
+        isLower = symbol === 'i';
+        if (hasV) {
+          rightCount += 1;
+        } else {
+          leftCount += 1;
+        }
       } else {
-        result.mode = 'major';
+        isLower = symbol === 'v';
+        hasV = true;
       }
     }
 
-    result.notesIndex -= 1;
+    result.notesIndex = hasV ? 5 + rightCount - leftCount - 1 : leftCount - 1;
+
+    result.mode = isLower ? 'minor' : 'major';
+    //console.log(symbols, result);
     return result;
   });
 

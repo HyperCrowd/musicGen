@@ -7,14 +7,10 @@ import {
   scales,
 } from './src/music';
 import { Note } from './src/note';
+import validate from './src/test';
 import './style.css';
 
-// console.log(scales.major);
-// console.log(chords.major);
-// console.log(generateChord(new Note(0, 'G-', 3), chords.major));
-console.log(
-  getProgressionChords('i-bVII-bVI-V7', 'A-', scales.melodicMinor, 3, 1)
-);
+validate();
 
 export default function App() {
   const { title } = useTracker();
