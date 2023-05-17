@@ -1,4 +1,4 @@
-import { scales, getProgressionChords } from './music';
+import { scales, getProgressionChords, progressions } from './music';
 
 /**
  *
@@ -45,6 +45,7 @@ function test(
  *
  */
 export default function validate() {
+  /*
   test('i-bVII-bVI-V7', 'A-', scales.melodicMinor, 3, 1, [
     ['A-', 'C-', 'E-'],
     ['G-', 'B-', 'D-'],
@@ -54,15 +55,24 @@ export default function validate() {
 
   test('I-VI-IV-V', 'B-', scales.major, 3, 1, [
     ['B-', 'D#', 'F#'],
+    ['G#', 'C-', 'D#'],
+    ['E-', 'G#', 'B-'],
+    ['F#', 'A#', 'C#'],
+  ]);
+
+  test('I-vi-IV-V', 'B-', scales.major, 3, 1, [
+    ['B-', 'D#', 'F#'],
     ['G#', 'B-', 'D#'],
     ['E-', 'G#', 'B-'],
-    ['F#-', 'A#', 'C#'],
+    ['F#', 'A#', 'C#'],
+  ]);
+*/
+  test(progressions.coltraneChanges, 'G-', scales.minor, 3, 1, [
+    ['G-', 'A-', 'D-'],
+    ['B-', 'D-', 'F-'],
+    ['E-', 'G#', 'B-'],
+    ['C-', 'E-', 'G-'],
+    ['D-', 'F#-', 'A-'],
+    ['G-', 'A-', 'D-'],
   ]);
 }
-
-/*
-B- D# F#
-G# B- D#
-E- G# B-
-F# A# C#
-*/

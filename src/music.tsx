@@ -232,7 +232,7 @@ export function getProgressionChords(
 
     result.push(generateChord(note, chord));
   }
-
+  console.log(result);
   return result;
 }
 
@@ -249,7 +249,7 @@ export function generateChord(rootNote: Note, chords: number[]): Note[] {
       (rootNoteIndex + chordOffset) / noteNames.length
     );
     const newNoteValue = noteNames[noteIndex];
-
+    console.log({ newNoteValue, noteIndex, rootNoteIndex, chordOffset });
     const newNote: Note = new Note(
       rootNote.instrument,
       newNoteValue,
